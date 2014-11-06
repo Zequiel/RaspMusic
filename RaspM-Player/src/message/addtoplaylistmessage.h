@@ -13,6 +13,8 @@ public:
     virtual MessageType getType() const override;
     virtual std::unique_ptr<QJsonObject> serialize() const override;
     std::vector<std::string> m_sources;
+protected:
+    virtual void deserialize(const QJsonObject &object);
 };
 
 #endif // ADDTOPLAYLISTMESSAGE_H

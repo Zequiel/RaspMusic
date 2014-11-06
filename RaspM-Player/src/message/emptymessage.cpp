@@ -13,3 +13,8 @@ std::unique_ptr<QJsonObject> EmptyMessage::serialize() const
 {
     return std::unique_ptr<QJsonObject>();
 }
+
+void EmptyMessage::deserialize(const QJsonObject &object)
+{
+
+}

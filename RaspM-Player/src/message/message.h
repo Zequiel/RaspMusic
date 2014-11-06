@@ -14,6 +14,11 @@ public:
     virtual MessageType getType() const = 0;
     static std::unique_ptr<Message> buildFromJSon(const QJsonObject &object);
     virtual std::unique_ptr<QJsonObject> serialize() const = 0;
+
+protected:
+    virtual void deserialize(const QJsonObject &object) = 0;
+private:
+    static std::unique_ptr<Message> createMessageInstanceFromJsonType(const QJsonObject &object);
 };
 
 #endif // MESSAGE_H

@@ -11,6 +11,10 @@ public:
 public:
     virtual MessageType getType() const override;
     virtual std::unique_ptr<QJsonObject> serialize() const override;
+
+    // Message interface
+protected:
+    virtual void deserialize(const QJsonObject &object);
 };
 
 #endif // EMPTYMESSAGE_H
