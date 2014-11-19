@@ -5,6 +5,7 @@
 #include <string>
 
 #include <message/message.h>
+#include <messagereaderwriter.h>
 
 #include <QHostAddress>
 #include <QTcpSocket>
@@ -16,16 +17,28 @@ struct ServerDefinition
     std::string name;
 };
 
-class Server
+class Server: public QObject
 {
+    Q_OBJECT
 public:
     Server(const ServerDefinition &connectTo);
     ~Server();
-    std::unique_ptr<Message> sendMessage(const Message& message);
+    void sendMessage(const Message& message);
+
+public slots:
+    void connectedSendMessage();
+
+private slots:
+    void connected();
+
+signals:
+    void messageReceived(std::shared_ptr<Message> message);
+    //void connected();
 
 private:
     Server();
     QTcpSocket m_socket;
+    MessageReaderWriter m_readWrite;
 };
 
 #endif // SERVER_H

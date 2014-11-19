@@ -5,7 +5,7 @@
 int main(int argc, char *argv[])
 {
     ServerDefinition definition = {
-        QHostAddress("127.0.0.1"),
+        QHostAddress::LocalHost,
         6423,
         "Default server"
     };
@@ -14,6 +14,8 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+    auto object = engine.rootObjects()[0];
+    QObject::connect(object, SIGNAL(clickedSig()), &server, SLOT(connectedSendMessage()));
 
     return app.exec();
 }

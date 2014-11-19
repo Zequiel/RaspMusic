@@ -8,6 +8,7 @@ class COMMONSHARED_EXPORT AddToPlaylistMessage: public Message
 public:
     AddToPlaylistMessage();
     const std::vector<std::string>& sources() const;
+    void addSource(std::string source);
 
     // Message interface
 public:

@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       -= gui
+QT       += network
 
 TARGET = Common
 TEMPLATE = lib
@@ -15,12 +16,14 @@ SOURCES += common.cpp \
     message/message.cpp \
     message/addtoplaylistmessage.cpp \
     message/emptymessage.cpp \
+    messagereaderwriter.cpp
 
 HEADERS += common.h\
         common_global.h \
     message/message.h \
     message/emptymessage.h \
     message/addtoplaylistmessage.h \
+    messagereaderwriter.h
 
 QMAKE_CXXFLAGS += -std=c++11
 

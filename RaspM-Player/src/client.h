@@ -1,25 +1,21 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 #include <QTcpSocket>
+#include <messagereaderwriter.h>
 
 class Server;
-class Client
+class Client: public QObject
 {
+    Q_OBJECT
 public:
     Client(QTcpSocket &socket, Server &server);
 
-    void handleReadDataSize();
-    void handleReadData();
 public slots:
-    void readData();
-private:
-    void handleBufferReady();
+    void handleMessageReceived(std::shared_ptr<Message> message);
 private:
     QTcpSocket &m_socket;
     Server &m_server;
-    bool m_isReceivingData;
-    qint32 m_dataSize;
-    QByteArray m_buffer;
+    MessageReaderWriter m_readWrite;
 };
 
 #endif // CLIENT_H

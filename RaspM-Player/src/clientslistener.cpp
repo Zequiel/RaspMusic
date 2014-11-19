@@ -1,13 +1,14 @@
 #include "clientslistener.h"
 #include "client.h"
 #include "server.h"
-#include <iostream>
+#include <easylogging++.h>
 
 ClientsListener::ClientsListener(Server &server): m_tcpServer(this), m_server(server)
 {
+    quint16 const port = 6423;
     m_newClientConnection = this->connect(&m_tcpServer, &QTcpServer::newConnection, this, &ClientsListener::newClient);
-    m_tcpServer.listen(QHostAddress::Any, 6423);
-    std::cout << "Accept connection on port " << 6423 << std::endl;
+    m_tcpServer.listen(QHostAddress::Any, port);
+    LOG(INFO) << "Start accept connection on port " << port;
 }
 
 ClientsListener::~ClientsListener()
@@ -17,8 +18,12 @@ ClientsListener::~ClientsListener()
 
 void ClientsListener::newClient()
 {
-    std::cout << "New client !" << std::endl;
     QTcpSocket *socket = m_tcpServer.nextPendingConnection();
+    LOG(INFO) << "New client connected";
     std::unique_ptr<Client> client(new Client(*socket, m_server));
+    QObject::connect(socket, &QTcpSocket::readyRead, []() {
+       std::cout << " writen !" << std::endl;
+    });
     m_clients.push_back(std::move(client));
+    socket->write("coucou");
 }

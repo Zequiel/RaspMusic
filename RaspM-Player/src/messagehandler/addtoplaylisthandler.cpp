@@ -2,6 +2,7 @@
 #include <message/addtoplaylistmessage.h>
 #include <message/emptymessage.h>
 #include "../player.h"
+#include <easylogging++.h>
 
 AddToPlaylistHandler::AddToPlaylistHandler(Player &player): MessageHandler(player)
 {
@@ -23,6 +24,7 @@ std::unique_ptr<Message> AddToPlaylistHandler::handle(const Message &genericMess
     for(const auto &source : message.sources())
     {
         m_player.addSource(source);
+        LOG(INFO) << "Add " << source << " to playlist";
     }
     return std::unique_ptr<Message>(new EmptyMessage());
 }

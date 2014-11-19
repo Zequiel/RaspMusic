@@ -38,4 +38,5 @@ else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../Common/debug/ -l
 else:unix: LIBS += -L$$OUT_PWD/../Common/ -lCommon
 
 INCLUDEPATH += $$PWD/../Common
+INCLUDEPATH += ../libs/
 DEPENDPATH += $$PWD/../Common
