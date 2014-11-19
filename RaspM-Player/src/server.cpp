@@ -1,5 +1,5 @@
 #include "server.h"
-#include "message/emptymessage.h"
+#include <message/emptymessage.h>
 #include "messagehandler/messagehandler.h"
 
 Server::Server(QObject *parent) :

@@ -1,8 +1,9 @@
 #ifndef EMPTYMESSAGE_H
 #define EMPTYMESSAGE_H
 #include "message.h"
+#include "common_global.h"
 
-class EmptyMessage: public Message
+class COMMONSHARED_EXPORT EmptyMessage: public Message
 {
 public:
     EmptyMessage();

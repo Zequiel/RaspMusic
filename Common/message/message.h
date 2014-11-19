@@ -1,5 +1,6 @@
 #ifndef MESSAGE_H
 #define MESSAGE_H
+#include "common_global.h"
 #include <memory>
 #include <QJsonObject>
 
@@ -7,7 +8,7 @@ enum class MessageType {
     ADD_TO_PLAYLIST, EMPTY
 };
 
-class Message
+class COMMONSHARED_EXPORT Message
 {
 public:
     Message();

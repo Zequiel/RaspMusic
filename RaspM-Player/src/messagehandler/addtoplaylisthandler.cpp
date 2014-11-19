@@ -1,6 +1,6 @@
 #include "addtoplaylisthandler.h"
-#include "../message/addtoplaylistmessage.h"
-#include "../message/emptymessage.h"
+#include <message/addtoplaylistmessage.h>
+#include <message/emptymessage.h>
 #include "../player.h"
 
 AddToPlaylistHandler::AddToPlaylistHandler(Player &player): MessageHandler(player)

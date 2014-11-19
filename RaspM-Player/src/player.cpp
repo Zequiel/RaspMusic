@@ -8,7 +8,6 @@ Player::Player()
 {
     this->setPlaylist(new QMediaPlaylist());
     this->play();
-    addSource("https://www.youtube.com/watch?v=zSAJ0l4OBHM");
 }
 
 Player::~Player()

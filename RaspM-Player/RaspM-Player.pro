@@ -15,17 +15,13 @@ QMAKE_CXXFLAGS += -std=c++11
 
 TEMPLATE = app
 
-
 SOURCES += main.cpp \
     src/server.cpp \
     src/player.cpp \
     src/clientslistener.cpp \
     src/client.cpp \
-    src/message/message.cpp \
-    src/message/addtoplaylistmessage.cpp \
-    src/messagehandler/messagehandler.cpp \
     src/messagehandler/addtoplaylisthandler.cpp \
-    src/message/emptymessage.cpp \
+    src/messagehandler/messagehandler.cpp \
     src/messagehandler/messagehandlerfactory.cpp
 
 HEADERS += \
@@ -33,9 +29,13 @@ HEADERS += \
     src/player.h \
     src/clientslistener.h \
     src/client.h \
-    src/message/message.h \
-    src/message/addtoplaylistmessage.h \
-    src/messagehandler/messagehandler.h \
     src/messagehandler/addtoplaylisthandler.h \
-    src/message/emptymessage.h \
+    src/messagehandler/messagehandler.h \
     src/messagehandler/messagehandlerfactory.h
+
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../Common/release/ -lCommon
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../Common/debug/ -lCommon
+else:unix: LIBS += -L$$OUT_PWD/../Common/ -lCommon
+
+INCLUDEPATH += $$PWD/../Common
+DEPENDPATH += $$PWD/../Common

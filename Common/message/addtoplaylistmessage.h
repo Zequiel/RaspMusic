@@ -1,8 +1,9 @@
 #ifndef ADDTOPLAYLISTMESSAGE_H
 #define ADDTOPLAYLISTMESSAGE_H
 #include "message.h"
+#include "common_global.h"
 
-class AddToPlaylistMessage: public Message
+class COMMONSHARED_EXPORT AddToPlaylistMessage: public Message
 {
 public:
     AddToPlaylistMessage();

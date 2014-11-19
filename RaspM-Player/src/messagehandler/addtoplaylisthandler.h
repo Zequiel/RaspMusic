@@ -1,8 +1,9 @@
 #ifndef ADDTOPLAYLISTHANDLER_H
 #define ADDTOPLAYLISTHANDLER_H
+#include "common_global.h"
 #include "messagehandler.h"
 
-class AddToPlaylistHandler: public MessageHandler
+class COMMONSHARED_EXPORT AddToPlaylistHandler: public MessageHandler
 {
 public:
     AddToPlaylistHandler(Player &player);
