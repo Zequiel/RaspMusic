@@ -25,20 +25,16 @@ public:
     ~Server();
     void sendMessage(const Message& message);
 
-public slots:
-    void connectedSendMessage();
-
-private slots:
-    void connected();
-
 signals:
     void messageReceived(std::shared_ptr<Message> message);
-    //void connected();
+    void constructed(ServerDefinition def);
+    void connected();
 
 private:
     Server();
     QTcpSocket m_socket;
     MessageReaderWriter m_readWrite;
+    bool m_connected;
 };
 
 #endif // SERVER_H

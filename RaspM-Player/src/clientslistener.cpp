@@ -21,9 +21,5 @@ void ClientsListener::newClient()
     QTcpSocket *socket = m_tcpServer.nextPendingConnection();
     LOG(INFO) << "New client connected";
     std::unique_ptr<Client> client(new Client(*socket, m_server));
-    QObject::connect(socket, &QTcpSocket::readyRead, []() {
-       std::cout << " writen !" << std::endl;
-    });
     m_clients.push_back(std::move(client));
-    socket->write("coucou");
 }

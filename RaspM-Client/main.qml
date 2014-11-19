@@ -7,7 +7,8 @@ ApplicationWindow {
     width: 640
     height: 480
     title: qsTr("Hello World")
-    signal clickedSig()
+    signal send()
+    signal connect()
     menuBar: MenuBar {
         Menu {
             title: qsTr("File")
@@ -23,13 +24,26 @@ ApplicationWindow {
     }
 
     Text {
-        text: qsTr("Hello World")
+        id: addSource
+        text: qsTr("Send data !")
+        visible: false
         anchors.centerIn: parent
 
         MouseArea {
             id: clickArea
             anchors.fill: parent
-            onClicked: mainElement.clickedSig()
+            onClicked: mainElement.send()
+        }
+    }
+
+    Button {
+        id: connect
+        x: 280
+        y: 143
+        text: "Connect !"
+        onClicked: {
+            mainElement.connect();
+            addSource.visible = true;
         }
     }
 }

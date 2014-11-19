@@ -3,7 +3,8 @@ TEMPLATE = app
 QT += qml quick widgets
 
 SOURCES += main.cpp \
-    server.cpp
+    server.cpp \
+    application.cpp
 
 RESOURCES += qml.qrc
 QMAKE_CXXFLAGS += -std=c++11
@@ -15,7 +16,8 @@ QML_IMPORT_PATH =
 include(deployment.pri)
 
 HEADERS += \
-    server.h
+    server.h \
+    application.h
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../Common/release/ -lCommon
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../Common/debug/ -lCommon

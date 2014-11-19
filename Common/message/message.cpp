@@ -1,6 +1,7 @@
 #include <QJsonObject>
 #include "message.h"
 #include "addtoplaylistmessage.h"
+#include <iostream>
 
 Message::Message()
 {
@@ -15,6 +16,7 @@ std::shared_ptr<Message> Message::createMessageInstanceFromJsonType(const QJsonO
 {
     std::shared_ptr<Message> message;
     QString type = object["type"].toString();
+    std::cout << type.toStdString() << std::endl;
     if(type.toLower() == "add_to_playlist")
     {
         message.reset(new AddToPlaylistMessage());
