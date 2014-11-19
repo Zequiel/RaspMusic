@@ -6,9 +6,10 @@
 #include <QMetaObject>
 #include <QTimer>
 #include <memory>
+#include "common_global.h"
 
 class Message;
-class MessageReaderWriter: public QObject
+class COMMONSHARED_EXPORT MessageReaderWriter: public QObject
 {
     Q_OBJECT
 public:

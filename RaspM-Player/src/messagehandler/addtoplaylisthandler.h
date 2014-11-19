@@ -3,7 +3,7 @@
 #include "common_global.h"
 #include "messagehandler.h"
 
-class COMMONSHARED_EXPORT AddToPlaylistHandler: public MessageHandler
+class AddToPlaylistHandler: public MessageHandler
 {
 public:
     AddToPlaylistHandler(Player &player);
