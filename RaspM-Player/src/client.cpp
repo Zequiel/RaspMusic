@@ -4,16 +4,21 @@
 #include "message/message.h"
 #include <easylogging++.h>
 
-Client::Client(QTcpSocket &socket, Server &server):
-    m_socket(socket),
+Client::Client(std::unique_ptr<QTcpSocket> socket, Server &server):
+    m_socket(std::move(socket)),
     m_server(server),
-    m_readWrite(socket)
+    m_readWrite(*m_socket)
 {
-    this->connect(&m_readWrite, &MessageReaderWriter::messageReceived, this, &Client::handleMessageReceived);
+    QObject::connect(&m_readWrite, &MessageReaderWriter::messageReceived, this, &Client::handleMessageReceived);
+    QObject::connect(m_socket.get(), &QTcpSocket::disconnected, this, &Client::clientLeft);
+}
+
+Client::~Client()
+{
+    LOG(INFO) << "Client left";
 }
 
 void Client::handleMessageReceived(std::shared_ptr<Message> message)
 {
-    LOG(INFO) << "Message received";
     m_server.handle(*message);
 }

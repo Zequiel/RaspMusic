@@ -11,7 +11,7 @@ public:
     // Message interface
 public:
     virtual MessageType getType() const override;
-    virtual std::unique_ptr<QJsonObject> serialize() const override;
+    virtual void serializeImpl(QJsonObject &object) const override;
 
     // Message interface
 protected:

@@ -15,6 +15,7 @@ public:
     ~ClientsListener();
 public slots:
     void newClient();
+    void clientLeft();
 private:
     QTcpServer m_tcpServer;
     QMetaObject::Connection m_newClientConnection;

@@ -18,8 +18,25 @@ ClientsListener::~ClientsListener()
 
 void ClientsListener::newClient()
 {
-    QTcpSocket *socket = m_tcpServer.nextPendingConnection();
+    std::unique_ptr<QTcpSocket> socket(m_tcpServer.nextPendingConnection());
     LOG(INFO) << "New client connected";
-    std::unique_ptr<Client> client(new Client(*socket, m_server));
+    std::unique_ptr<Client> client(new Client(std::move(socket), m_server));
+    QObject::connect(client.get(), &Client::clientLeft, this, &ClientsListener::clientLeft);
     m_clients.push_back(std::move(client));
+}
+
+void ClientsListener::clientLeft()
+{
+    Client *client = dynamic_cast<Client*>(sender());
+    m_clients.erase(
+                std::remove_if(
+                    m_clients.begin(),
+                    m_clients.end(),
+                    [client](std::unique_ptr<Client> &other)
+                    {
+                        return other.get() == client;
+                    }
+                ),
+            m_clients.end()
+            );
 }

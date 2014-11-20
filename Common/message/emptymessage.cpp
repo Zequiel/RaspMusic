@@ -9,9 +9,9 @@ MessageType EmptyMessage::getType() const
     return MessageType::EMPTY;
 }
 
-std::unique_ptr<QJsonObject> EmptyMessage::serialize() const
+void EmptyMessage::serializeImpl(QJsonObject &object) const
 {
-    return std::unique_ptr<QJsonObject>();
+
 }
 
 void EmptyMessage::deserialize(const QJsonObject &object)

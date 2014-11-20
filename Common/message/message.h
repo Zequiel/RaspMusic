@@ -5,7 +5,8 @@
 #include <QJsonObject>
 
 enum class MessageType {
-    ADD_TO_PLAYLIST, EMPTY
+    ADD_TO_PLAYLIST = 0,
+    EMPTY = 1
 };
 
 class COMMONSHARED_EXPORT Message
@@ -15,10 +16,11 @@ public:
     virtual ~Message();
     virtual MessageType getType() const = 0;
     static std::shared_ptr<Message> buildFromJSon(const QJsonObject &object);
-    virtual std::unique_ptr<QJsonObject> serialize() const = 0;
+    std::unique_ptr<QJsonObject> serialize() const;
 
 protected:
     virtual void deserialize(const QJsonObject &object) = 0;
+    virtual void serializeImpl(QJsonObject &object) const = 0;
 private:
     static std::shared_ptr<Message> createMessageInstanceFromJsonType(const QJsonObject &object);
 };

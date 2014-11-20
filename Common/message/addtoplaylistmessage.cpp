@@ -21,22 +21,19 @@ MessageType AddToPlaylistMessage::getType() const
     return MessageType::ADD_TO_PLAYLIST;
 }
 
-std::unique_ptr<QJsonObject> AddToPlaylistMessage::serialize() const
+void AddToPlaylistMessage::serializeImpl(QJsonObject &object) const
 {
-    std::unique_ptr<QJsonObject> object(new QJsonObject());
     QJsonArray sources;
     for(auto source : m_sources)
     {
         sources.append(QJsonValue(QString::fromStdString(source)));
     }
-    (*object)["sources"] = sources;
-    (*object)["type"] = QString("add_to_playlist");
-    return object;
+    object["sources"] = sources;
+    object["type"] = (int) MessageType::ADD_TO_PLAYLIST;
 }
 
 void AddToPlaylistMessage::deserialize(const QJsonObject &object)
 {
-    std::cout << "add message" << std::endl;
     QJsonArray sources = object["sources"].toArray();
     for(QJsonValue source: sources)
     {
