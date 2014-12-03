@@ -3,6 +3,7 @@
 #include "src/clientslistener.h"
 #include <iostream>
 #include <easylogging++.h>
+#include "src/mediacollection.h"
 
 _INITIALIZE_EASYLOGGINGPP
 

@@ -2,6 +2,7 @@
 #define PLAYER_H
 #include <QObject>
 #include <QMediaPlayer>
+#include "mediacollection.h"
 
 class Player: public QMediaPlayer
 {
@@ -10,10 +11,10 @@ public:
     explicit Player();
     virtual ~Player();
 private:
-    QString getMediaUrl(const std::string &source);
 public slots:
     void addSource(const std::string &source);
 private:
+    MediaCollection m_mediaCollection;
 };
 
 #endif // PLAYER_H

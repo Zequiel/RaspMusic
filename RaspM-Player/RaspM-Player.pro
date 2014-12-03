@@ -22,7 +22,8 @@ SOURCES += main.cpp \
     src/client.cpp \
     src/messagehandler/addtoplaylisthandler.cpp \
     src/messagehandler/messagehandler.cpp \
-    src/messagehandler/messagehandlerfactory.cpp
+    src/messagehandler/messagehandlerfactory.cpp \
+    src/mediacollection.cpp
 
 HEADERS += \
     src/server.h \
@@ -31,7 +32,8 @@ HEADERS += \
     src/client.h \
     src/messagehandler/addtoplaylisthandler.h \
     src/messagehandler/messagehandler.h \
-    src/messagehandler/messagehandlerfactory.h
+    src/messagehandler/messagehandlerfactory.h \
+    src/mediacollection.h
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../Common/release/ -lCommon
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../Common/debug/ -lCommon
