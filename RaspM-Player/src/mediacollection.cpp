@@ -5,6 +5,7 @@
 #include <QJsonObject>
 #include <QSettings>
 #include <QVariantMap>
+#include <QCryptographicHash>
 
 MediaCollection::MediaCollection()
 {
@@ -48,8 +49,8 @@ void MediaCollection::load()
 
 std::string MediaCollection::downloadMedia(const std::string &url, const std::string folder)
 {
-    std::string path = folder + "/%(id)s";
     std::string id = getMediaId(url);
+    std::string path = folder + "/" + id;
     QProcess youtubeDl;
     youtubeDl.setArguments({"-f", "m4a", "-o", path.c_str(), url.c_str()});
     youtubeDl.setProgram("youtube-dl");
@@ -64,14 +65,9 @@ std::string MediaCollection::downloadMedia(const std::string &url, const std::st
 
 std::string MediaCollection::getMediaId(const std::string &url)
 {
-    QProcess youtubeDl;
-    youtubeDl.setArguments({"-f", "m4a", "-j", url.c_str()});
-    youtubeDl.setProgram("youtube-dl");
-    youtubeDl.start();
-    youtubeDl.waitForFinished(10000);
-    QByteArray json = youtubeDl.readAllStandardOutput();
-    QJsonDocument document = QJsonDocument::fromJson(json);
-    QString id = document.object().value("display_id").toString();
+    QByteArray bytes;
+    bytes.append(url.data());
+    QByteArray hash = QCryptographicHash::hash(bytes, QCryptographicHash::Md5);
 
-    return id.toStdString();
+    return hash.toHex().toStdString();
 }
