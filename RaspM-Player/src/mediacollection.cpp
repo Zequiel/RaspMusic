@@ -7,7 +7,7 @@
 #include <QVariantMap>
 #include <QCryptographicHash>
 
-MediaCollection::MediaCollection()
+MediaCollection::MediaCollection(const std::string &cacheFolder): m_cacheFolder(cacheFolder)
 {
     load();
 }
@@ -19,8 +19,7 @@ std::string MediaCollection::getMediaFilePath(const std::string &url)
     {
         return it->second;
     }
-    //TODO Configuration dossier de cache
-    std::string path = downloadMedia(url, "/home/thomas/tmp");
+    std::string path = downloadMedia(url);
     m_mediasUrls[url] = path;
     return path;
 }
@@ -47,20 +46,19 @@ void MediaCollection::load()
     }
 }
 
-std::string MediaCollection::downloadMedia(const std::string &url, const std::string folder)
+std::string MediaCollection::downloadMedia(const std::string &url)
 {
     std::string id = getMediaId(url);
-    std::string path = folder + "/" + id;
+    std::string path = m_cacheFolder + "/" + id;
     QProcess youtubeDl;
     youtubeDl.setArguments({"-f", "m4a", "-o", path.c_str(), url.c_str()});
     youtubeDl.setProgram("youtube-dl");
     youtubeDl.start();
     youtubeDl.waitForFinished(120000);
 
-    std::string finalPath = folder + "/" + id;
-    m_mediasUrls[url] = finalPath;
+    m_mediasUrls[url] = path;
     save();
-    return finalPath;
+    return path;
 }
 
 std::string MediaCollection::getMediaId(const std::string &url)
