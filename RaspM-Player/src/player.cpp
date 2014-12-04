@@ -5,17 +5,20 @@
 
 Player::Player(const std::string &cacheFolder): m_mediaCollection(cacheFolder)
 {
-    this->setPlaylist(new QMediaPlaylist());
-    this->play();
+    player.setPlaylist(new QMediaPlaylist());
+    player.play();
+    connect(this, &Player::addSource, this, &Player::addSourceImpl);
+    moveToThread(&m_thread);
+    m_thread.start();
 }
 
 Player::~Player()
 {
 }
 
-void Player::addSource(const std::string &source)
+void Player::addSourceImpl(AddToPlaylistRequest request)
 {
-    std::string mediaUrl = m_mediaCollection.getMediaFilePath(source);
-    this->playlist()->addMedia(QUrl(QString::fromStdString("file://"+mediaUrl)));
-    this->play();
+    std::string mediaUrl = m_mediaCollection.getMediaFilePath(request.url);
+    player.playlist()->addMedia(QUrl(QString::fromStdString("file://"+mediaUrl)));
+    player.play();
 }

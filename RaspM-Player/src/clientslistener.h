@@ -19,7 +19,7 @@ public slots:
 private:
     QTcpServer m_tcpServer;
     QMetaObject::Connection m_newClientConnection;
-    std::vector<std::unique_ptr<Client>> m_clients;
+    std::vector<std::shared_ptr<Client>> m_clients;
     Server &m_server;
 };
 

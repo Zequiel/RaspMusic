@@ -8,9 +8,14 @@ class Server;
 class Client: public QObject
 {
     Q_OBJECT
-public:
+private:
     Client(std::unique_ptr<QTcpSocket> socket, Server &server);
+
+public:
     ~Client();
+
+public:
+    static std::shared_ptr<Client> instance(std::unique_ptr<QTcpSocket> socket, Server &server);
 
 public slots:
     void handleMessageReceived(std::shared_ptr<Message> message);
@@ -19,6 +24,7 @@ signals:
     void clientLeft();
 
 private:
+    std::weak_ptr<Client> m_self;
     std::unique_ptr<QTcpSocket> m_socket;
     Server &m_server;
     MessageReaderWriter m_readWrite;

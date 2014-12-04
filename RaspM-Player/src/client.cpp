@@ -18,7 +18,14 @@ Client::~Client()
     LOG(INFO) << "Client left";
 }
 
+std::shared_ptr<Client> Client::instance(std::unique_ptr<QTcpSocket> socket, Server &server)
+{
+    std::shared_ptr<Client> client(new Client(std::move(socket), server));
+    client->m_self = client;
+    return client;
+}
+
 void Client::handleMessageReceived(std::shared_ptr<Message> message)
 {
-    m_server.handle(*message);
+    m_server.handle(m_self, *message);
 }

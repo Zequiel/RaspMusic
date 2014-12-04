@@ -11,7 +11,7 @@ class MessageHandlerFactory
 public:
     MessageHandlerFactory(Server &server);
     ~MessageHandlerFactory();
-    const MessageHandler & getHandlerFor(const Message &message) const;
+    MessageHandler &getHandlerFor(const Message &message) const;
 private:
     std::vector<std::unique_ptr<MessageHandler>> m_handlers;
 };

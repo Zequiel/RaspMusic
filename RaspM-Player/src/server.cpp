@@ -6,12 +6,13 @@
 #include <QStandardPaths>
 
 Server::Server(QObject *parent) :
-    QObject(parent), m_messageHandler(*this)
+    QObject(parent)
 {
     QSettings settings;
     QString defaultCachePath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
     std::string cachePath = settings.value("cachePath", defaultCachePath).toString().toStdString();
     m_player = std::unique_ptr<Player>(new Player(cachePath));
+    m_messageHandler = std::unique_ptr<MessageHandlerFactory>(new MessageHandlerFactory(*this));
 }
 
 Player &Server::player()
@@ -23,12 +24,12 @@ Server::~Server()
 {
 }
 
-std::unique_ptr<Message> Server::handle(const Message &message)
+std::unique_ptr<Message> Server::handle(std::weak_ptr<Client> client, const Message &message)
 {
     try
     {
-        const MessageHandler &handler = m_messageHandler.getHandlerFor(message);
-        return handler.handle(message);
+        MessageHandler &handler = m_messageHandler->getHandlerFor(message);
+        return handler.handle(client, message);
     }
     catch(std::exception &e)
     {

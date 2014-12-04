@@ -20,9 +20,9 @@ void ClientsListener::newClient()
 {
     std::unique_ptr<QTcpSocket> socket(m_tcpServer.nextPendingConnection());
     LOG(INFO) << "New client connected";
-    std::unique_ptr<Client> client(new Client(std::move(socket), m_server));
+    std::shared_ptr<Client> client = Client::instance(std::move(socket), m_server);
     QObject::connect(client.get(), &Client::clientLeft, this, &ClientsListener::clientLeft);
-    m_clients.push_back(std::move(client));
+    m_clients.push_back(client);
 }
 
 void ClientsListener::clientLeft()
@@ -32,7 +32,7 @@ void ClientsListener::clientLeft()
                 std::remove_if(
                     m_clients.begin(),
                     m_clients.end(),
-                    [client](std::unique_ptr<Client> &other)
+                    [client](std::shared_ptr<Client> &other)
                     {
                         return other.get() == client;
                     }

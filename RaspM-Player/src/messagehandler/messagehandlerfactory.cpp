@@ -2,7 +2,8 @@
 #include "addtoplaylisthandler.h"
 #include "../server.h"
 
-MessageHandlerFactory::MessageHandlerFactory(Server &server){
+MessageHandlerFactory::MessageHandlerFactory(Server &server)
+{
     m_handlers.push_back(std::unique_ptr<MessageHandler>(new AddToPlaylistHandler(server.player())));
 }
 
@@ -11,7 +12,7 @@ MessageHandlerFactory::~MessageHandlerFactory()
 
 }
 
-const MessageHandler &MessageHandlerFactory::getHandlerFor(const Message &message) const
+MessageHandler &MessageHandlerFactory::getHandlerFor(const Message &message) const
 {
     for(auto &handler : m_handlers)
     {
