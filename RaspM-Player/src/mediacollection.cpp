@@ -36,7 +36,7 @@ std::string MediaCollection::getMediaFilePath(const std::string &url)
 
 void MediaCollection::save()
 {
-    QSettings settings("RaspMusic", "Player");
+    QSettings settings;
     QMap<QString, QVariant> map;
     for(auto entry: m_mediasUrls)
     {
@@ -47,7 +47,7 @@ void MediaCollection::save()
 
 void MediaCollection::load()
 {
-    QSettings settings("RaspMusic", "Player");
+    QSettings settings;
     QMap<QString, QVariant> map = settings.value("cacheData").toMap();
     m_mediasUrls.clear();
     for(auto entry: map.toStdMap())
