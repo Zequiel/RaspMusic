@@ -3,7 +3,7 @@
 #include <QMediaPlaylist>
 #include <QUrl>
 
-Player::Player(): m_mediaCollection("/home/thomas/tmp")
+Player::Player(const std::string &cacheFolder): m_mediaCollection(cacheFolder)
 {
     this->setPlaylist(new QMediaPlaylist());
     this->play();

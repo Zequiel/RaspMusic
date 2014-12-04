@@ -7,6 +7,8 @@ class MediaCollection
 {
 public:
     MediaCollection(const std::string &cacheFolder);
+    MediaCollection();
+    void setCacheFolder(const std::string &path);
     std::string getMediaFilePath(const std::string& url);
     void save();
     void load();

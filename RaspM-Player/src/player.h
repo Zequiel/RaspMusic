@@ -8,7 +8,7 @@ class Player: public QMediaPlayer
 {
     Q_OBJECT
 public:
-    explicit Player();
+    explicit Player(const std::string &cacheFolder);
     virtual ~Player();
 private:
 public slots:

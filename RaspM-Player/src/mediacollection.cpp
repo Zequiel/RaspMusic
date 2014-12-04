@@ -12,6 +12,16 @@ MediaCollection::MediaCollection(const std::string &cacheFolder): m_cacheFolder(
     load();
 }
 
+MediaCollection::MediaCollection()
+{
+    load();
+}
+
+void MediaCollection::setCacheFolder(const std::string &path)
+{
+    m_cacheFolder = path;
+}
+
 std::string MediaCollection::getMediaFilePath(const std::string &url)
 {
     auto it = m_mediasUrls.find(url);

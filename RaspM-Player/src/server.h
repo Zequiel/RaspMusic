@@ -3,15 +3,16 @@
 
 #include <QObject>
 #include <memory>
-#include "player.h"
 #include "messagehandler/messagehandlerfactory.h"
 
 class Message;
+class Player;
 class Server : public QObject
 {
     Q_OBJECT
 public:
     explicit Server(QObject *parent = 0);
+    ~Server();
     Player& player();
     std::unique_ptr<Message> handle(const Message& message);
 signals:
@@ -19,7 +20,7 @@ signals:
 public slots:
 
 private:
-    Player m_player;
+    std::unique_ptr<Player> m_player;
     MessageHandlerFactory m_messageHandler;
 };
 
