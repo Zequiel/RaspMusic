@@ -15,6 +15,7 @@ public:
 
 signals:
     void sourceAdded(AddToPlaylistRequest request);
+    void stop();
 
 signals:
     void addSource(AddToPlaylistRequest request);

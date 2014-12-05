@@ -29,12 +29,12 @@ void Application::connect()
     };
     m_server = std::unique_ptr<Server>(new Server(definition));
     auto object = engine.rootObjects()[0];
-    QObject::connect(object, SIGNAL(send()), this, SLOT(sendSource()));
+    QObject::connect(object, SIGNAL(send(QString)), this, SLOT(sendSource(QString)));
 }
 
-void Application::sendSource()
+void Application::sendSource(QString url)
 {
     AddToPlaylistMessage message;
-    message.addSource("https://www.youtube.com/watch?v=zSAJ0l4OBHM");
+    message.addSource(url.toStdString());
     m_server->sendMessage(message);
 }

@@ -60,11 +60,14 @@ std::string MediaCollection::downloadMedia(const std::string &url)
 {
     std::string id = getMediaId(url);
     std::string path = m_cacheFolder + "/" + id;
-    QProcess youtubeDl;
-    youtubeDl.setArguments({"-f", "m4a", "-o", path.c_str(), url.c_str()});
-    youtubeDl.setProgram("youtube-dl");
-    youtubeDl.start();
-    youtubeDl.waitForFinished(120000);
+    QProcess *youtubeDl = new QProcess();
+    youtubeDl->setArguments({"-f", "m4a", "--no-part", "-o", path.c_str(), url.c_str()});
+    youtubeDl->setProgram("youtube-dl");
+    youtubeDl->start();
+
+    this->connect(youtubeDl,  static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), [=](){
+        //TODO IMPL !
+    });
 
     m_mediasUrls[url] = path;
     save();

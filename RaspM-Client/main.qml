@@ -7,7 +7,7 @@ ApplicationWindow {
     width: 640
     height: 480
     title: qsTr("Hello World")
-    signal send()
+    signal send(string url)
     signal connect()
     menuBar: MenuBar {
         Menu {
@@ -26,13 +26,15 @@ ApplicationWindow {
     Text {
         id: addSource
         text: qsTr("Send data !")
+        anchors.verticalCenterOffset: 107
+        anchors.horizontalCenterOffset: 1
         visible: false
         anchors.centerIn: parent
 
         MouseArea {
             id: clickArea
             anchors.fill: parent
-            onClicked: mainElement.send()
+            onClicked: mainElement.send(url.text)
         }
     }
 
@@ -45,5 +47,15 @@ ApplicationWindow {
             mainElement.connect();
             addSource.visible = true;
         }
+    }
+
+    TextInput {
+        id: url
+        x: 47
+        y: 207
+        width: 557
+        height: 20
+        text: qsTr("url")
+        font.pixelSize: 12
     }
 }

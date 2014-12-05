@@ -2,8 +2,9 @@
 #define MEDIACOLLECTION_H
 #include <map>
 #include <string>
+#include <QObject>
 
-class MediaCollection
+class MediaCollection: public QObject
 {
 public:
     MediaCollection(const std::string &cacheFolder);
