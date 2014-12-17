@@ -21,6 +21,11 @@ signals:
     void addSource(AddToPlaylistRequest request);
 public slots:
     void addSourceImpl(AddToPlaylistRequest request);
+    void next();
+    void previous();
+    void play();
+    void pause();
+    void setVolume(float volume);
 
 private:
     MediaCollection m_mediaCollection;
