@@ -1,6 +1,7 @@
 #ifndef MEDIACOLLECTION_H
 #define MEDIACOLLECTION_H
 #include <map>
+#include <set>
 #include <string>
 #include <QObject>
 #include <QSqlDatabase>
@@ -24,6 +25,7 @@ private:
 private:
     std::map<std::string, std::string> m_mediasUrls;
     std::string m_cacheFolder;
+    std::set<int> m_downloadingIds;
     QSqlDatabase m_db;
 };
 

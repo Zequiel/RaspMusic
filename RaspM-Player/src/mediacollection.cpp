@@ -44,7 +44,7 @@ std::string MediaCollection::getMediaFilePath(const std::string &url)
     query.exec();
     if(query.next())
     {
-        if(query.value(1).toInt() == INCOMPLETE)
+        if(query.value(1).toInt() == DOWNLOADING && m_downloadingIds.count(query.value(0).toInt()) == 0)
         {
             downloadMediaById(query.value(0).toInt());
         }
@@ -72,6 +72,7 @@ void MediaCollection::load()
 
 std::string MediaCollection::downloadMediaById(int id)
 {
+    m_downloadingIds.insert(id);
     QSqlQuery query(m_db);
     query.prepare("SELECT url FROM musics WHERE id = :id");
     query.bindValue(":id", id);
@@ -86,14 +87,7 @@ std::string MediaCollection::downloadMediaById(int id)
         youtubeDl->start();
 
         this->connect(youtubeDl,  static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), [=](int code, QProcess::ExitStatus status){
-            if(status == QProcess::ExitStatus::CrashExit || code != 0) {
-                LOG(INFO) << "Music "<< url <<" incomplete";
-                QSqlQuery update(this->m_db);
-                update.prepare("UPDATE musics SET status = :status WHERE id = :id;");
-                update.bindValue(":id", id);
-                update.bindValue(":status", INCOMPLETE);
-                update.exec();
-            } else {
+            if(status != QProcess::ExitStatus::CrashExit && code == 0) {
                 LOG(INFO) << "Music "<< url <<" completed";
                 QSqlQuery update(this->m_db);
                 update.prepare("UPDATE musics SET status = :status WHERE id = :id;");
@@ -102,6 +96,7 @@ std::string MediaCollection::downloadMediaById(int id)
                 update.exec();
                 youtubeDl->deleteLater();
             }
+            this->m_downloadingIds.erase(id);
         });
 
         return path;
@@ -136,7 +131,7 @@ void MediaCollection::restartIncompleteDownloads()
 {
     QSqlQuery query(m_db);
     query.prepare("SELECT id FROM musics WHERE status = :status;");
-    query.bindValue(":status", INCOMPLETE);
+    query.bindValue(":status", DOWNLOADING);
     query.exec();
     while(query.next())
     {
