@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core multimedia
+QT       += core multimedia sql
 
 QT       -= gui
 
