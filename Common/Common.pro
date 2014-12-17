@@ -16,14 +16,16 @@ SOURCES += common.cpp \
     message/message.cpp \
     message/addtoplaylistmessage.cpp \
     message/emptymessage.cpp \
-    messagereaderwriter.cpp
+    messagereaderwriter.cpp \
+    message/setstatemessage.cpp
 
 HEADERS += common.h\
         common_global.h \
     message/message.h \
     message/emptymessage.h \
     message/addtoplaylistmessage.h \
-    messagereaderwriter.h
+    messagereaderwriter.h \
+    message/setstatemessage.h
 
 QMAKE_CXXFLAGS += -std=c++11
 

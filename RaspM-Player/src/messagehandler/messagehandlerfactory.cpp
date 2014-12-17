@@ -1,10 +1,12 @@
 #include "messagehandlerfactory.h"
 #include "addtoplaylisthandler.h"
+#include "setstatehandler.h"
 #include "../server.h"
 
 MessageHandlerFactory::MessageHandlerFactory(Server &server)
 {
     m_handlers.push_back(std::unique_ptr<MessageHandler>(new AddToPlaylistHandler(server.player())));
+    m_handlers.push_back(std::unique_ptr<MessageHandler>(new SetStateHandler(server.player())));
 }
 
 MessageHandlerFactory::~MessageHandlerFactory()
