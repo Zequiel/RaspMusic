@@ -17,6 +17,7 @@ enum MediaStatus {
 MediaCollection::MediaCollection(const std::string &cacheFolder): m_cacheFolder(cacheFolder)
 {
     load();
+    restartIncompleteDownloads();
 }
 
 MediaCollection::MediaCollection()
@@ -113,7 +114,7 @@ std::string MediaCollection::downloadMedia(const std::string &url)
     query.exec();
     int id = query.lastInsertId().toInt();
     std::string path = downloadMediaById(id);
-    QThread::sleep(2000);
+    QThread::sleep(2);
 
     return path;
 }
