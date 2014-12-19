@@ -6,7 +6,8 @@ SOURCES += main.cpp \
     server.cpp \
     application.cpp \
     providers/youtubesearchclient.cpp \
-    providers/searchresult.cpp
+    providers/searchresult.cpp \
+    serverdiscorverer.cpp
 
 RESOURCES += qml.qrc
 QMAKE_CXXFLAGS += -std=c++11
@@ -21,7 +22,10 @@ HEADERS += \
     server.h \
     application.h \
     providers/youtubesearchclient.h \
-    providers/searchresult.h
+    providers/searchresult.h \
+    serverdiscorverer.h
+
+unix|win32: LIBS += -lupnp
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../Common/release/ -lCommon
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../Common/debug/ -lCommon

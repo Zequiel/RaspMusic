@@ -4,6 +4,7 @@
 #include "player.h"
 #include <QSettings>
 #include <QStandardPaths>
+#include "serverpresencenotifier.h"
 
 Server::Server(QObject *parent) :
     QObject(parent)
@@ -13,6 +14,7 @@ Server::Server(QObject *parent) :
     std::string cachePath = settings.value("cachePath", defaultCachePath).toString().toStdString();
     m_player = std::unique_ptr<Player>(new Player(cachePath));
     m_messageHandler = std::unique_ptr<MessageHandlerFactory>(new MessageHandlerFactory(*this));
+    m_notifier = std::unique_ptr<ServerPresenceNotifier>(new ServerPresenceNotifier());
 }
 
 Player &Server::player()

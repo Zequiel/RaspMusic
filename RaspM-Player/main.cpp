@@ -6,6 +6,8 @@
 #include "src/mediacollection.h"
 #include <src/requests/addtoplaylistrequest.h>
 
+#include "src/serverpresencenotifier.h"
+
 _INITIALIZE_EASYLOGGINGPP
 
 int main(int argc, char *argv[])
@@ -21,4 +23,5 @@ int main(int argc, char *argv[])
     ClientsListener listener(server);
     LOG(INFO) << "Server started !";
     return a.exec();
+    return 0;
 }
