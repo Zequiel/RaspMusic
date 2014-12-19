@@ -22,7 +22,9 @@ void YoutubeSearchClient::search(QString query)
 
     QNetworkRequest request(url);
     QNetworkReply *response = m_mng.get(request);
+
     QObject::connect(response, &QNetworkReply::finished, [=](){
+        QUrl youtubeUrl("https://www.youtube.com/watch");
         QJsonDocument doc = QJsonDocument::fromJson(response->readAll());
         response->deleteLater();
         auto items = doc.object()["items"].toArray();
@@ -32,7 +34,12 @@ void YoutubeSearchClient::search(QString query)
             QString id = object["id"].toObject()["videoId"].toString();
             QString title = object["snippet"].toObject()["title"].toString();
             QString thumb = object["snippet"].toObject()["thumbnails"].toObject()["medium"].toObject()["url"].toString();
-            results << SearchResult{ id, title, thumb };
+
+            QUrlQuery urlQuery;
+            urlQuery.addQueryItem("v", id);
+            youtubeUrl.setQuery(urlQuery);
+
+            results << SearchResult{ youtubeUrl.toDisplayString(), title, thumb };
         }
         emit searchResultReady(query, results);
     });
