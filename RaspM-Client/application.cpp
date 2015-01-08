@@ -9,9 +9,9 @@
 Application::Application(QObject *parent) :
     QObject(parent)
 {
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-    auto object = engine.rootObjects()[0];
-    QObject::connect(object, SIGNAL(connect()), this, SLOT(connect()));
+    engine.load(QUrl(QStringLiteral("qrc:/mainLayout.qml")));
+    /*auto object = engine.rootObjects()[0];
+    QObject::connect(object, SIGNAL(connect()), this, SLOT(connect()));*/
     std::cout << "app\n" << std::endl;
 }
 

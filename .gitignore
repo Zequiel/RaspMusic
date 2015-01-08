@@ -26,3 +26,6 @@ proguard/
 *.log
 
 *.pro.user
+
+# JetBreans
+.idea/

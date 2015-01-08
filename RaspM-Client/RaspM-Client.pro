@@ -6,7 +6,9 @@ SOURCES += main.cpp \
     server.cpp \
     application.cpp
 
-RESOURCES += qml.qrc
+RESOURCES += \
+    icons.qrc \
+    qml.qrc
 QMAKE_CXXFLAGS += -std=c++11
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
@@ -25,3 +27,5 @@ else:unix: LIBS += -L$$OUT_PWD/../Common/ -lCommon
 
 INCLUDEPATH += $$PWD/../Common
 DEPENDPATH += $$PWD/../Common
+INCLUDEPATH += $$PWD/icons
+DEPENDPATH += $$PWD/icons
