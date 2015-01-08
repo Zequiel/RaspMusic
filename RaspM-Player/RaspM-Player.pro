@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core multimedia
+QT       += core multimedia sql
 
 QT       -= gui
 
@@ -24,7 +24,9 @@ SOURCES += main.cpp \
     src/messagehandler/messagehandler.cpp \
     src/messagehandler/messagehandlerfactory.cpp \
     src/mediacollection.cpp \
-    src/requests/addtoplaylistrequest.cpp
+    src/requests/addtoplaylistrequest.cpp \
+    src/messagehandler/setstatehandler.cpp \
+    src/serverpresencenotifier.cpp
 
 HEADERS += \
     src/server.h \
@@ -35,7 +37,11 @@ HEADERS += \
     src/messagehandler/messagehandler.h \
     src/messagehandler/messagehandlerfactory.h \
     src/mediacollection.h \
-    src/requests/addtoplaylistrequest.h
+    src/requests/addtoplaylistrequest.h \
+    src/messagehandler/setstatehandler.h \
+    src/serverpresencenotifier.h
+
+unix|win32: LIBS += -lupnp
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../Common/release/ -lCommon
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../Common/debug/ -lCommon

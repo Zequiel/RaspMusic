@@ -6,7 +6,8 @@
 
 enum class MessageType {
     ADD_TO_PLAYLIST = 0,
-    EMPTY = 1
+    EMPTY = 2,
+    STATE = 3
 };
 
 class COMMONSHARED_EXPORT Message

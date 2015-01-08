@@ -28,3 +28,28 @@ void Player::addSourceImpl(AddToPlaylistRequest request)
     player.playlist()->addMedia(QUrl(QString::fromStdString("file://"+mediaUrl)));
     player.play();
 }
+
+void Player::next()
+{
+    player.playlist()->next();
+}
+
+void Player::previous()
+{
+    player.playlist()->previous();
+}
+
+void Player::play()
+{
+    player.play();
+}
+
+void Player::pause()
+{
+    player.pause();
+}
+
+void Player::setVolume(float volume)
+{
+    player.setVolume(100 * volume);
+}

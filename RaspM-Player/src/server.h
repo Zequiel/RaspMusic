@@ -2,12 +2,14 @@
 #define SERVER_H
 
 #include <QObject>
+#include <QTimer>
 #include <memory>
 #include "messagehandler/messagehandlerfactory.h"
 
 class Message;
 class Player;
 class Client;
+class ServerPresenceNotifier;
 class Server : public QObject
 {
     Q_OBJECT
@@ -23,6 +25,7 @@ public slots:
 private:
     std::unique_ptr<Player> m_player;
     std::unique_ptr<MessageHandlerFactory> m_messageHandler;
+    std::unique_ptr<ServerPresenceNotifier> m_notifier;
 };
 
 #endif // SERVER_H
