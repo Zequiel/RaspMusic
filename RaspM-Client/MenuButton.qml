@@ -22,6 +22,8 @@ Rectangle {
         height: 32
         anchors.left: parent.left
         anchors.leftMargin: 32
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignLeft
         text: content
     }
 }

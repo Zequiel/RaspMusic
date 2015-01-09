@@ -6,5 +6,6 @@
         <file>Search.qml</file>
         <file>MenuButton.qml</file>
         <file>HeaderComponent.qml</file>
+        <file>SearchInput.qml</file>
     </qresource>
 </RCC>

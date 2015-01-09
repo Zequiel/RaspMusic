@@ -4,7 +4,8 @@ import QtQuick.Layouts 1.1
 
 Rectangle {
     id: content
-    anchors.fill: parent
+    width: parent.width
+    height: 34
     property variant states
     signal stateChanged(string stateName)
 
@@ -41,24 +42,7 @@ Rectangle {
         }
     }
 
-    Image {
-        id: stateIcon
-        x: 0
-        y: 0
-        width: 32
-        height: 32
-
-        Text {
-            id: stateName
-            x: 32
-            width: 61
-            height: 32
-            text: qsTr("Historique")
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignLeft
-            font.pixelSize: 12
-        }
-    }
+    SearchInput {}
 
     Component.onCompleted: {
         var component = Qt.createComponent('MenuButton.qml');
@@ -91,8 +75,6 @@ Rectangle {
     function setCurrentState(index) {
         contentChoice.checked = false
         var key = Object.keys(states[index])[0];
-        stateIcon.source = states[index][key].source;
-        stateName.text = states[index][key].name;
 
         stateChanged(key)
     }

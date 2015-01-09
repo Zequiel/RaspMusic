@@ -8,5 +8,6 @@
         <file>icons/next.png</file>
         <file>icons/prevent.png</file>
         <file>icons/play.png</file>
+        <file>icons/search.png</file>
     </qresource>
 </RCC>
