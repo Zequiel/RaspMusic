@@ -10,7 +10,6 @@ int callback(Upnp_EventType EventType, void* Event, void* Cookie)
         self->upnpEventReceived((Upnp_Discovery*)Event);
         break;
     case UPNP_DISCOVERY_SEARCH_TIMEOUT:
-        std::cout << "timleout" << std::endl;
         emit self->finished();
     default:
         break;
@@ -28,7 +27,8 @@ ServerDiscoverer::ServerDiscoverer(QObject *parent) :
 
 void ServerDiscoverer::startDiscovering()
 {
-    std::cout << UpnpSearchAsync(m_clientHandle, 10, "uuid:raspm-player-0.0.1", this) << std::endl;
+    m_servers.clear();
+    UpnpSearchAsync(m_clientHandle, 10, "uuid:raspm-player-0.0.1", this);
 }
 
 void ServerDiscoverer::upnpEventReceived(Upnp_Discovery *event)
@@ -49,7 +49,6 @@ void ServerDiscoverer::__addIpThreadSafeImpl(QString ip)
     if(!m_servers.contains(ip))
     {
         m_servers.insert(ip);
-        std::cout << ip.toStdString() << std::endl;
         emit serverDiscovred(ip);
     }
 }
