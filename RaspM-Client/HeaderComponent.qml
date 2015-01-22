@@ -42,7 +42,7 @@ Rectangle {
         }
     }
 
-    SearchInput {}
+    SearchField {}
 
     Component.onCompleted: {
         var component = Qt.createComponent('MenuButton.qml');

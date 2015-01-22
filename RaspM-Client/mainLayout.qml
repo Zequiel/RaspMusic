@@ -28,4 +28,6 @@ ApplicationWindow {
             }
         ]
     }
+
+    PlayerComponent {}
 }

@@ -2,10 +2,9 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>mainLayout.qml</file>
-        <file>connexion.qml</file>
-        <file>Search.qml</file>
         <file>MenuButton.qml</file>
         <file>HeaderComponent.qml</file>
-        <file>SearchInput.qml</file>
+        <file>SearchField.qml</file>
+        <file>PlayerComponent.qml</file>
     </qresource>
 </RCC>

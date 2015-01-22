@@ -9,5 +9,7 @@
         <file>icons/prevent.png</file>
         <file>icons/play.png</file>
         <file>icons/search.png</file>
+        <file>icons/noPicture.png</file>
+        <file>icons/pause.png</file>
     </qresource>
 </RCC>
