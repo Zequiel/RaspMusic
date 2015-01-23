@@ -13,6 +13,8 @@ private:
     Q_PROPERTY(QString thumb MEMBER m_thumb)
 public:
     SearchResult(QObject* parent, QString p_url, QString p_title, QString p_thumb);
+    SearchResult(const SearchResult& other);
+    SearchResult& operator=(const SearchResult& other);
 private:
     QString m_url;
     QString m_title;
