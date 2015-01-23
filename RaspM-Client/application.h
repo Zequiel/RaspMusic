@@ -17,7 +17,7 @@ signals:
 
 public slots:
     void connect();
-    void sendSource(QString url);
+    void addMusic(QString url);
 
 private:
     std::unique_ptr<Server> m_server;

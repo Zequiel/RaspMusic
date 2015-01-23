@@ -47,6 +47,7 @@ Item {
             width: 110
             height: 160
             x: searchField.x
+            z: 1
             anchors.top: searchField.bottom
             anchors.topMargin: 20
             visible: suggestListModel.count > 0
@@ -76,7 +77,6 @@ Item {
         Connections {
             target: client
             onSuggestResultReady: setSuggestResult(query, results)
-            onSearchResultReady: setSearchResult(query, results)
         }
     }
     function sendQuerySuggest() {
@@ -97,21 +97,8 @@ Item {
     }
 
     function sendQuerySearch(search) {
-        console.log(search)
         suggestListModel.clear()
         searchField.search(search)
     }
 
-    function setSearchResult(query, results) {
-        console.log(JSON.stringify(arguments));
-        for (var i = 0; i < results.length; ++i) {
-            var result = results[i]
-            console.log(result)
-            musicListModel.append({
-                                    image: result.thumb,
-                                    name: result.title,
-                                    link: result.url
-                                  })
-        }
-    }
 }

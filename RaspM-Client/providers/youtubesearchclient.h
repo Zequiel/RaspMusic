@@ -6,6 +6,8 @@
 #include <QList>
 #include <QNetworkAccessManager>
 
+Q_DECLARE_METATYPE(SearchResult)
+
 class YoutubeSearchClient: public QObject
 {
     Q_OBJECT
@@ -17,7 +19,7 @@ public slots:
     void suggest(QString query);
 
 signals:
-    void searchResultReady(QString query, QList<SearchResult> results);
+    void searchResultReady(QString query, QVariantList results);
     void suggestResultReady(QString query, QStringList results);
 
 private:

@@ -40,7 +40,7 @@ void Application::connect()
     m_server = std::unique_ptr<Server>(new Server(definition));
 }
 
-void Application::sendSource(QString url)
+void Application::addMusic(QString url)
 {
     AddToPlaylistMessage message;
     message.addSource(url.toStdString());

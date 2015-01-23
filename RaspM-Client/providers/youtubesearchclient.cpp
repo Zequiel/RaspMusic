@@ -4,6 +4,7 @@
 #include <QRegularExpressionMatch>
 #include <QJsonArray>
 #include <QJsonDocument>
+#include<iostream>
 
 YoutubeSearchClient::YoutubeSearchClient(QObject* parent): QObject(parent)
 {
@@ -28,7 +29,7 @@ void YoutubeSearchClient::search(QString query)
         QJsonDocument doc = QJsonDocument::fromJson(response->readAll());
         response->deleteLater();
         auto items = doc.object()["items"].toArray();
-        QList<SearchResult> results;
+        QVariantList results;
         for(const auto &element: items) {
             auto object = element.toObject();
             QString id = object["id"].toObject()["videoId"].toString();
@@ -40,7 +41,10 @@ void YoutubeSearchClient::search(QString query)
             urlQuery.addQueryItem("v", id);
             youtubeUrl.setQuery(urlQuery);
 
-            results << SearchResult(this, youtubeUrl.toDisplayString(), title, thumb);
+            QVariant result;
+            result.setValue(new SearchResult(this, youtubeUrl.toDisplayString(), title, thumb));
+
+            results << result;
         }
         emit searchResultReady(query, results);
     });

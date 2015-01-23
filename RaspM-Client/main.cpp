@@ -11,6 +11,5 @@ int main(int argc, char *argv[])
     Application appli;
     ServerDiscoverer discoverer;
     discoverer.startDiscovering();
-
     return app.exec();
 }
