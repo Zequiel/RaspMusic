@@ -6,5 +6,6 @@
         <file>HeaderComponent.qml</file>
         <file>SearchField.qml</file>
         <file>PlayerComponent.qml</file>
+        <file>MusicList.qml</file>
     </qresource>
 </RCC>

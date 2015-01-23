@@ -10,9 +10,12 @@ class YoutubeSearchClient: public QObject
 {
     Q_OBJECT
 public:
-    YoutubeSearchClient();
+    YoutubeSearchClient(QObject* parent);
+
+public slots:
     void search(QString query);
     void suggest(QString query);
+
 signals:
     void searchResultReady(QString query, QList<SearchResult> results);
     void suggestResultReady(QString query, QStringList results);

@@ -7,6 +7,8 @@ ApplicationWindow {
     width: 200
     height: 200
     visible: true
+    signal connect()
+    onBeforeRendering: serverConnection()
     HeaderComponent {
         states: [
             {
@@ -29,5 +31,11 @@ ApplicationWindow {
         ]
     }
 
+    MusicList {}
+
     PlayerComponent {}
+
+    function serverConnection() {
+        this.connect();
+    }
 }

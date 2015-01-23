@@ -2,6 +2,7 @@ import QtQuick 2.0
 import QtQuick.Controls 1.2
 
 Rectangle {
+    id: player
     width: parent.width
     height: 34
     anchors.bottom: parent.bottom

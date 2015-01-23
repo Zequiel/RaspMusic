@@ -5,7 +5,7 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 
-YoutubeSearchClient::YoutubeSearchClient()
+YoutubeSearchClient::YoutubeSearchClient(QObject* parent): QObject(parent)
 {
 }
 
@@ -36,10 +36,11 @@ void YoutubeSearchClient::search(QString query)
             QString thumb = object["snippet"].toObject()["thumbnails"].toObject()["medium"].toObject()["url"].toString();
 
             QUrlQuery urlQuery;
+
             urlQuery.addQueryItem("v", id);
             youtubeUrl.setQuery(urlQuery);
 
-            results << SearchResult{ youtubeUrl.toDisplayString(), title, thumb };
+            results << SearchResult(this, youtubeUrl.toDisplayString(), title, thumb);
         }
         emit searchResultReady(query, results);
     });

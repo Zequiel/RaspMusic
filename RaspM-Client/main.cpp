@@ -9,8 +9,6 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     Application appli;
-    YoutubeSearchClient client;
-    client.search("coucou");
     ServerDiscoverer discoverer;
     discoverer.startDiscovering();
 
