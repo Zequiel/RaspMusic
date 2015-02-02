@@ -26,7 +26,11 @@ Application::Application(QObject *parent) :
 
     auto playerComponent = mainObject->findChild<QObject*>("player");
     QObject::connect(playerComponent, SIGNAL(sendMusic(QString)), this, SLOT(sendMusic(QString)));
-    QObject::connect(playerComponent, SIGNAL(sendStateMessage(QString)), this, SLOT(sendStateMessage(QString)));
+    QObject::connect(playerComponent, SIGNAL(sendPlay()), this, SLOT(sendPlay()));
+    QObject::connect(playerComponent, SIGNAL(sendPause()), this, SLOT(sendPause()));
+    QObject::connect(playerComponent, SIGNAL(sendNext()), this, SLOT(sendNext()));
+    QObject::connect(playerComponent, SIGNAL(sendPrevious()), this, SLOT(sendPrevious()));
+    QObject::connect(playerComponent, SIGNAL(sendVolume(bool)), this, SLOT(sendVolume(bool)));
 
     this->connect();
     std::cout << "app\n" << std::endl;
@@ -54,23 +58,57 @@ void Application::sendMusic(QString url)
     m_server->sendMessage(message);
 }
 
-void Application::sendStateMessage(QString state)
+void Application::sendPlay()
 {
     this->initStates();
 
-    states.insert(state, true);
+    stateMessage.play = true;
 
-    SetStateMessage message;
-    message.buildFromJSon(states);
-    m_server->sendMessage(message);
+    m_server->sendMessage(stateMessage);
+}
+
+void Application::sendPause()
+{
+    this->initStates();
+
+    stateMessage.stop = true;
+
+    m_server->sendMessage(stateMessage);
+}
+
+void Application::sendNext()
+{
+    this->initStates();
+
+    stateMessage.next = true;
+
+    m_server->sendMessage(stateMessage);
+}
+
+void Application::sendPrevious()
+{
+    this->initStates();
+
+    stateMessage.previous = true;
+
+    m_server->sendMessage(stateMessage);
+}
+
+void Application::sendVolume(bool up)
+{
+    this->initStates();
+
+    stateMessage.volume += (up) ? 1.f : -1.f;
+
+    m_server->sendMessage(stateMessage);
 }
 
 void Application::initStates()
 {
-    states.insert("play", false);
-    states.insert("volume", 1.f);
-    states.insert("play", false);
-    states.insert("next", false);
-    states.insert("previous", false);
-    states.insert("stop", false);
+    stateMessage.play = false;
+    stateMessage.volume = 1.f;
+    stateMessage.play = false;
+    stateMessage.next = false;
+    stateMessage.previous = false;
+    stateMessage.stop = false;
 }

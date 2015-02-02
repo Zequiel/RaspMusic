@@ -2,9 +2,9 @@
 #define APPLICATION_H
 
 #include <QObject>
-#include <QJsonObject>
 #include <QQmlApplicationEngine>
 #include <memory>
+#include <message/setstatemessage.h>
 
 class Server;
 class Application : public QObject
@@ -19,11 +19,15 @@ signals:
 public slots:
     void connect();
     void sendMusic(QString url);
-    void sendStateMessage(QString state);
+    void sendPlay();
+    void sendPause();
+    void sendNext();
+    void sendPrevious();
+    void sendVolume(bool up);
 
 private:
     void initStates();
-    QJsonObject states;
+    SetStateMessage stateMessage;
     std::unique_ptr<Server> m_server;
     QQmlApplicationEngine engine;
 };
