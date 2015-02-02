@@ -3,10 +3,13 @@ import QtQuick.Controls 1.2
 
 Rectangle {
     id: player
+    objectName: "player"
     width: parent.width
     height: 34
     anchors.bottom: parent.bottom
     anchors.bottomMargin: 0
+    property MusicList musicList: null
+    signal sendMusic(string link)
 
     Image {
         id: musicPicture
@@ -21,7 +24,8 @@ Rectangle {
 
     Text {
         id: musicTitle
-        width: parent.width - (musicPicture.width + nextButton.width + preventButton.width + playButton.width)
+        width: parent.width - (musicPicture.width + nextButton.width
+                               + preventButton.width + playButton.width)
         height: parent.height
         anchors.left: parent.left
         anchors.leftMargin: musicPicture.width
@@ -68,25 +72,36 @@ Rectangle {
         onClicked: preventMusic()
     }
 
-    function nextMusic() {
-
+    Connections {
+        target: musicList
+        onAddMusic: sendQueryToReadMusic(title, thumb, link)
     }
 
+    function nextMusic() {}
+
     function playMusic() {
-        changePlayOrPauseVisibility();
+        changePlayOrPauseVisibility()
     }
 
     function pauseMusic() {
-        changePlayOrPauseVisibility();
+        changePlayOrPauseVisibility()
     }
 
-    function preventMusic() {
-
-    }
+    function preventMusic() {}
 
     function changePlayOrPauseVisibility() {
-        playButton.visible = !playButton.visible;
-        pauseButton.visible = !pauseButton.visible;
+        playButton.visible = !playButton.visible
+        pauseButton.visible = !pauseButton.visible
+    }
+
+    function sendQueryToReadMusic(title, thumb, link) {
+
+        player.sendMusic(link)
+
+        if (playButton.visible) {
+            changePlayOrPauseVisibility()
+            musicTitle.text = title
+            musicPicture.source = thumb
+        }
     }
 }
-

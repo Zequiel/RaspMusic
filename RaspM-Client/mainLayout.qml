@@ -4,11 +4,10 @@ import QtQuick.Controls 1.2
 import QtQuick.Layouts 1.1
 
 ApplicationWindow {
+    id: mainLayout
     width: 200
     height: 200
     visible: true
-    signal connect()
-    onBeforeRendering: serverConnection()
     HeaderComponent {
         states: [
             {
@@ -31,11 +30,12 @@ ApplicationWindow {
         ]
     }
 
-    MusicList {}
-
-    PlayerComponent {}
-
-    function serverConnection() {
-        this.connect();
+    MusicList {
+        id: musicList
     }
+
+    PlayerComponent {
+        musicList: musicList
+    }
+
 }

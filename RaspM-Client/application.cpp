@@ -16,12 +16,15 @@ Application::Application(QObject *parent) :
     engine.load(QUrl(QStringLiteral("qrc:/mainLayout.qml")));
 
     auto mainObject = engine.rootObjects()[0];
-    QObject::connect(mainObject, SIGNAL(connect()), this, SLOT(connect()));
 
     auto searchField = mainObject->findChild<QObject*>("searchField");
     QObject::connect(searchField, SIGNAL(suggest(QString)), client, SLOT(suggest(QString)));
     QObject::connect(searchField, SIGNAL(search(QString)), client, SLOT(search(QString)));
 
+    auto playerComponent = mainObject->findChild<QObject*>("player");
+    QObject::connect(playerComponent, SIGNAL(sendMusic(QString)), this, SLOT(sendMusic(QString)));
+
+    this->connect();
     std::cout << "app\n" << std::endl;
 }
 
@@ -40,7 +43,7 @@ void Application::connect()
     m_server = std::unique_ptr<Server>(new Server(definition));
 }
 
-void Application::addMusic(QString url)
+void Application::sendMusic(QString url)
 {
     AddToPlaylistMessage message;
     message.addSource(url.toStdString());

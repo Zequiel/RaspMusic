@@ -47,7 +47,7 @@ Item {
             width: 110
             height: 160
             x: searchField.x
-            z: 1
+            z: 2
             anchors.top: searchField.bottom
             anchors.topMargin: 20
             visible: suggestListModel.count > 0

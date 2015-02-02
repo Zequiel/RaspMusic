@@ -1,6 +1,9 @@
 import QtQuick 2.0
 
 ListView {
+    id: musicList
+    objectName: "musicList"
+    signal addMusic(string title, string thumb, string link)
     anchors.top: parent.top
     anchors.topMargin: 34
     z:-1
@@ -27,7 +30,7 @@ ListView {
         }
         MouseArea {
             anchors.fill: parent
-            onClicked: sendQueryToReadMusic(name)
+            onClicked: musicList.addMusic(title, image, link)
         }
     }
     model: ListModel {
@@ -50,6 +53,4 @@ ListView {
                                   })
         }
     }
-
-    function sendQueryToReadMusic(name) {}
 }
