@@ -29,7 +29,6 @@ void AddToPlaylistMessage::serializeImpl(QJsonObject &object) const
         sources.append(QJsonValue(QString::fromStdString(source)));
     }
     object["sources"] = sources;
-    object["type"] = (int) MessageType::ADD_TO_PLAYLIST;
 }
 
 void AddToPlaylistMessage::deserialize(const QJsonObject &object)

@@ -1,6 +1,7 @@
 #include <QJsonObject>
 #include "message.h"
 #include "addtoplaylistmessage.h"
+#include "setstatemessage.h"
 #include "emptymessage.h"
 #include <iostream>
 
@@ -21,6 +22,9 @@ std::shared_ptr<Message> Message::createMessageInstanceFromJsonType(const QJsonO
     {
     case MessageType::ADD_TO_PLAYLIST:
         message.reset(new AddToPlaylistMessage());
+        break;
+    case MessageType::STATE:
+        message.reset(new SetStateMessage());
         break;
     case MessageType::EMPTY:
     defaults:

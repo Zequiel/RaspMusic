@@ -9,6 +9,7 @@
 #include <QSqlQuery>
 #include <QThread>
 #include <easylogging++.h>
+#include <QDir>
 
 enum MediaStatus {
     DOWNLOADING = 0, DOWNLOADED = 1, INCOMPLETE = 2
