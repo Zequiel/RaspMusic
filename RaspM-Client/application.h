@@ -2,6 +2,7 @@
 #define APPLICATION_H
 
 #include <QObject>
+#include <QJsonObject>
 #include <QQmlApplicationEngine>
 #include <memory>
 
@@ -18,8 +19,11 @@ signals:
 public slots:
     void connect();
     void sendMusic(QString url);
+    void sendStateMessage(QString state);
 
 private:
+    void initStates();
+    QJsonObject states;
     std::unique_ptr<Server> m_server;
     QQmlApplicationEngine engine;
 };

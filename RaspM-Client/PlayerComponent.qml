@@ -10,6 +10,7 @@ Rectangle {
     anchors.bottomMargin: 0
     property MusicList musicList: null
     signal sendMusic(string link)
+    signal sendStateMessage(string state)
 
     Image {
         id: musicPicture
@@ -41,7 +42,7 @@ Rectangle {
         anchors.right: parent.right
         anchors.rightMargin: 0
         iconSource: "icons/next.png"
-        onClicked: nextMusic()
+        onClicked: sendStateMessage("next")
     }
     Button {
         id: playButton
@@ -69,7 +70,7 @@ Rectangle {
         anchors.right: parent.right
         anchors.rightMargin: nextButton.width + playButton.width
         iconSource: "icons/prevent.png"
-        onClicked: preventMusic()
+        onClicked: sendStateMessage("previous")
     }
 
     Connections {
@@ -77,17 +78,15 @@ Rectangle {
         onAddMusic: sendQueryToReadMusic(title, thumb, link)
     }
 
-    function nextMusic() {}
-
     function playMusic() {
-        changePlayOrPauseVisibility()
+        sendStateMessage("play");
+        changePlayOrPauseVisibility();
     }
 
     function pauseMusic() {
-        changePlayOrPauseVisibility()
+        sendStateMessage("pause");
+        changePlayOrPauseVisibility();
     }
-
-    function preventMusic() {}
 
     function changePlayOrPauseVisibility() {
         playButton.visible = !playButton.visible
@@ -95,13 +94,13 @@ Rectangle {
     }
 
     function sendQueryToReadMusic(title, thumb, link) {
-
         player.sendMusic(link)
 
         if (playButton.visible) {
             changePlayOrPauseVisibility()
             musicTitle.text = title
             musicPicture.source = thumb
+            musicPicture.opacity = 1
         }
     }
 }
