@@ -26,6 +26,7 @@ public slots:
     void play();
     void pause();
     void setVolume(float volume);
+    QString getCurrentSource() const;
 
 private:
     MediaCollection m_mediaCollection;

@@ -26,7 +26,8 @@ SOURCES += main.cpp \
     src/mediacollection.cpp \
     src/requests/addtoplaylistrequest.cpp \
     src/messagehandler/setstatehandler.cpp \
-    src/serverpresencenotifier.cpp
+    src/serverpresencenotifier.cpp \
+    src/messagehandler/getsourcemessagehandler.cpp
 
 HEADERS += \
     src/server.h \
@@ -39,7 +40,8 @@ HEADERS += \
     src/mediacollection.h \
     src/requests/addtoplaylistrequest.h \
     src/messagehandler/setstatehandler.h \
-    src/serverpresencenotifier.h
+    src/serverpresencenotifier.h \
+    src/messagehandler/getsourcemessagehandler.h
 
 unix|win32: LIBS += -lupnp
 

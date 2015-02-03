@@ -3,6 +3,8 @@
 #include "addtoplaylistmessage.h"
 #include "setstatemessage.h"
 #include "emptymessage.h"
+#include "getcurrentsourcemessage.h"
+#include "currentsourcemessage.h"
 #include <iostream>
 
 Message::Message()
@@ -25,6 +27,12 @@ std::shared_ptr<Message> Message::createMessageInstanceFromJsonType(const QJsonO
         break;
     case MessageType::STATE:
         message.reset(new SetStateMessage());
+        break;
+    case MessageType::GET_CURRENT_SOURCE:
+        message.reset(new GetCurrentSourceMessage());
+        break;
+    case MessageType::CURRENT_SOURCE:
+        message.reset(new CurrentSourceMessage());
         break;
     case MessageType::EMPTY:
     defaults:

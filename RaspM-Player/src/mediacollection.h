@@ -14,6 +14,7 @@ public:
     ~MediaCollection();
     void setCacheFolder(const std::string &path);
     std::string getMediaFilePath(const std::string& url);
+    std::string getOriginalUrl(const std::string path) const;
     void load();
 
     std::string downloadMediaById(int id);
