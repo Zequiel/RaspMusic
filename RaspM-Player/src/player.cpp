@@ -53,3 +53,9 @@ void Player::setVolume(float volume)
 {
     player.setVolume(100 * volume);
 }
+
+QString Player::getCurrentSource() const
+{
+   QString source = player.currentMedia().canonicalUrl().toLocalFile();
+   return QString::fromStdString(this->m_mediaCollection.getOriginalUrl(source.toStdString()));
+}

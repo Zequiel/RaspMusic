@@ -6,8 +6,6 @@
 #include "src/mediacollection.h"
 #include <src/requests/addtoplaylistrequest.h>
 
-#include "src/serverpresencenotifier.h"
-
 _INITIALIZE_EASYLOGGINGPP
 
 int main(int argc, char *argv[])

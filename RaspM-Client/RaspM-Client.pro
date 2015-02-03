@@ -6,8 +6,7 @@ SOURCES += main.cpp \
     server.cpp \
     application.cpp \
     providers/youtubesearchclient.cpp \
-    providers/searchresult.cpp \
-    serverdiscorverer.cpp
+    providers/searchresult.cpp
 
 RESOURCES += \
     icons.qrc \
@@ -24,10 +23,7 @@ HEADERS += \
     server.h \
     application.h \
     providers/youtubesearchclient.h \
-    providers/searchresult.h \
-    serverdiscorverer.h
-
-unix|win32: LIBS += -lupnp
+    providers/searchresult.h
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../Common/release/ -lCommon
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../Common/debug/ -lCommon

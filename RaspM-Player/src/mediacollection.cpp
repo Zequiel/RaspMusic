@@ -10,6 +10,7 @@
 #include <QThread>
 #include <easylogging++.h>
 #include <QDir>
+#include <QFileInfo>
 
 enum MediaStatus {
     DOWNLOADING = 0, DOWNLOADED = 1, INCOMPLETE = 2
@@ -54,6 +55,21 @@ std::string MediaCollection::getMediaFilePath(const std::string &url)
     }
     std::string path = downloadMedia(url);
     return path;
+}
+
+std::string MediaCollection::getOriginalUrl(const std::string path) const
+{
+    QSqlQuery query(m_db);
+    QFileInfo file(QString::fromStdString(path));
+    QString id = file.baseName();
+    query.prepare("SELECT url FROM musics WHERE id = :id");
+    query.bindValue(":id", id.toInt());
+    query.exec();
+    if(query.next())
+    {
+        return query.value(0).toString().toStdString();
+    }
+    return "";
 }
 
 void MediaCollection::load()
@@ -118,15 +134,6 @@ std::string MediaCollection::downloadMedia(const std::string &url)
     QThread::sleep(2);
 
     return path;
-}
-
-std::string MediaCollection::getMediaId(const std::string &url)
-{
-    QByteArray bytes;
-    bytes.append(url.data());
-    QByteArray hash = QCryptographicHash::hash(bytes, QCryptographicHash::Md5);
-
-    return hash.toHex().toStdString();
 }
 
 void MediaCollection::restartIncompleteDownloads()

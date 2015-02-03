@@ -17,7 +17,9 @@ SOURCES += common.cpp \
     message/addtoplaylistmessage.cpp \
     message/emptymessage.cpp \
     messagereaderwriter.cpp \
-    message/setstatemessage.cpp
+    message/setstatemessage.cpp \
+    message/currentsourcemessage.cpp \
+    message/getcurrentsourcemessage.cpp
 
 HEADERS += common.h\
         common_global.h \
@@ -25,9 +27,12 @@ HEADERS += common.h\
     message/emptymessage.h \
     message/addtoplaylistmessage.h \
     messagereaderwriter.h \
-    message/setstatemessage.h
+    message/setstatemessage.h \
+    message/currentsourcemessage.h \
+    message/getcurrentsourcemessage.h
 
 QMAKE_CXXFLAGS += -std=c++11
+CONFIG += staticlib
 
 unix {
     target.path = /usr/lib
