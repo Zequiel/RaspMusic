@@ -12,11 +12,13 @@
 Application::Application(QObject *parent) :
     QObject(parent)
 {
+    QObject::connect(this, SIGNAL(receiveMusicUrl(QString)), this, SLOT(searchMusicData(QString)));
     this->initStates();
 
     YoutubeSearchClient* client = new YoutubeSearchClient(this);
     engine.rootContext()->setContextProperty("client", client);
-    engine.load(QUrl(QStringLiteral("qrc:/mainLayout.qml")));
+    engine.rootContext()->setContextProperty("app", this);
+    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
     auto mainObject = engine.rootObjects()[0];
 
@@ -25,7 +27,7 @@ Application::Application(QObject *parent) :
     QObject::connect(searchField, SIGNAL(search(QString)), client, SLOT(search(QString)));
 
     auto playerComponent = mainObject->findChild<QObject*>("player");
-    QObject::connect(playerComponent, SIGNAL(sendMusic(QString)), this, SLOT(sendMusic(QString)));
+    QObject::connect(playerComponent, SIGNAL(sendMusic(QString, QString, QString)), this, SLOT(sendMusic(QString, QString, QString)));
     QObject::connect(playerComponent, SIGNAL(sendPlay()), this, SLOT(sendPlay()));
     QObject::connect(playerComponent, SIGNAL(sendPause()), this, SLOT(sendPause()));
     QObject::connect(playerComponent, SIGNAL(sendNext()), this, SLOT(sendNext()));
@@ -51,8 +53,21 @@ void Application::connect()
     m_server = std::unique_ptr<Server>(new Server(definition));
 }
 
-void Application::sendMusic(QString url)
+void Application::searchMusicData(QString url)
 {
+   QJsonObject music = serverMusicList[url].toObject();
+
+   changeMusicData(music["title"].toString(), music["thumb"].toString(), url);
+}
+
+void Application::sendMusic(QString title, QString thumb, QString url)
+{
+    QJsonObject music;
+    music["title"] = title;
+    music["thumb"] = thumb;
+
+    serverMusicList.insert(url, music);
+
     AddToPlaylistMessage message;
     message.addSource(url.toStdString());
     m_server->sendMessage(message);

@@ -15,10 +15,13 @@ public:
     ~Application();
 
 signals:
+    void receiveMusicUrl(QString url);
+    void changeMusicData(QString title, QString thumb, QString url);
 
 public slots:
     void connect();
-    void sendMusic(QString url);
+    void searchMusicData(QString url);
+    void sendMusic(QString title, QString thumb, QString url);
     void sendPlay();
     void sendPause();
     void sendNext();
@@ -28,6 +31,7 @@ public slots:
 private:
     void initStates();
     SetStateMessage stateMessage;
+    QJsonObject serverMusicList;
     std::unique_ptr<Server> m_server;
     QQmlApplicationEngine engine;
 };

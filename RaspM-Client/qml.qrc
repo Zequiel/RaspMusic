@@ -1,8 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>mainLayout.qml</file>
-        <file>MenuButton.qml</file>
         <file>HeaderComponent.qml</file>
         <file>SearchField.qml</file>
         <file>PlayerComponent.qml</file>

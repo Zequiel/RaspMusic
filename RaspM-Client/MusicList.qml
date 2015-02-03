@@ -3,43 +3,67 @@ import QtQuick 2.0
 ListView {
     id: musicList
     objectName: "musicList"
+    property string state: "SEARCH"
     signal addMusic(string title, string thumb, string link)
     anchors.top: parent.top
-    anchors.topMargin: 34
+    anchors.topMargin: parent.height * 0.08
     z:-1
     width: parent.width
-    height: 132
+    height: parent.height * 0.84
     snapMode: ListView.SnapToItem
-    focus: true
+    highlight: Rectangle {
+        color: "grey"
+    }
+    highlightMoveDuration: 500
     delegate: Item {
-        x: 5
-        width: 80
-        height: 20
+        width: musicList.width
+        height: musicList.height * 0.1
         Row {
-            spacing: 10
+            width: parent.width
+            height: parent.height
+            spacing: parent.width * 0.01
             Image {
                 source: image
-                width: 20
-                height: 20
+                width: parent.height
+                height: parent.height
             }
 
             Text {
                 text: title
+                font.pixelSize: parent.height * 0.2
                 anchors.verticalCenter: parent.verticalCenter
             }
         }
         MouseArea {
             anchors.fill: parent
-            onClicked: musicList.addMusic(title, image, link)
+            onClicked: {
+                if (musicList.state === "SEARCH") {
+                    musicList.currentIndex = index;
+
+                    serverMusicList.append({
+                                      image: image,
+                                      title: title,
+                                      link: link
+                                  })
+
+                    musicList.addMusic(title, image, link);
+                }
+            }
         }
     }
-    model: ListModel {
-        id: musicListModel
-    }
+    model: (musicList.state === "SEARCH") ? musicListModel: serverMusicList
 
     Connections {
         target: client
         onSearchResultReady: setSearchResult(query, results)
+    }
+
+    ListModel {
+        id: musicListModel
+    }
+
+    ListModel {
+        id: serverMusicList
     }
 
     function setSearchResult(query, results) {
@@ -53,4 +77,9 @@ ListView {
                                   })
         }
     }
+
+    function changeContent(state){
+        musicList.state = state;
+    }
+
 }

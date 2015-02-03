@@ -1,25 +1,26 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.2
+import QtQuick.Controls.Styles 1.2
 
 Rectangle {
     id: player
     objectName: "player"
     width: parent.width
-    height: 34
+    height: parent.height * 0.08
     anchors.bottom: parent.bottom
     anchors.bottomMargin: 0
     property MusicList musicList: null
-    signal sendMusic(string link)
-    signal sendPlay()
-    signal sendPause()
-    signal sendNext()
-    signal sendPrevious()
+    signal sendMusic(string title, string thumb, string link)
+    signal sendPlay
+    signal sendPause
+    signal sendNext
+    signal sendPrevious
     signal sendVolume(bool up)
 
     Image {
         id: musicPicture
-        width: 32
-        height: 32
+        width: parent.height
+        height: parent.height
         opacity: 0.3
         anchors.left: parent.left
         anchors.leftMargin: 0
@@ -33,47 +34,63 @@ Rectangle {
                                + preventButton.width + playButton.width)
         height: parent.height
         anchors.left: parent.left
-        anchors.leftMargin: musicPicture.width
+        anchors.leftMargin: musicPicture.width + (parent.width * 0.01)
         verticalAlignment: Text.AlignVCenter
         text: "-"
-        font.pixelSize: 12
+        font.pixelSize: parent.height * 0.4
     }
 
     Button {
         id: nextButton
-        width: 32
-        height: 32
+        width: parent.height
+        height: parent.height
         anchors.right: parent.right
         anchors.rightMargin: 0
-        iconSource: "icons/next.png"
+        style: ButtonStyle {
+            background: Image {
+                source: "icons/next.png"
+            }
+        }
         onClicked: player.sendNext()
     }
     Button {
         id: playButton
-        width: 32
-        height: 32
+        width: parent.height
+        height: parent.height
         anchors.right: parent.right
         anchors.rightMargin: nextButton.width
-        iconSource: "icons/play.png"
+        style: ButtonStyle {
+            background: Image {
+                source: "icons/play.png"
+            }
+        }
         onClicked: playMusic()
     }
     Button {
         id: pauseButton
         visible: false
-        width: 32
-        height: 32
+        width: parent.height
+        height: parent.height
         anchors.right: parent.right
         anchors.rightMargin: nextButton.width
-        iconSource: "icons/pause.png"
+        style: ButtonStyle {
+            background: Image {
+                source: "icons/pause.png"
+            }
+        }
         onClicked: pauseMusic()
     }
     Button {
         id: preventButton
-        width: 32
-        height: 32
+        width: parent.height
+        height: parent.height
         anchors.right: parent.right
         anchors.rightMargin: nextButton.width + playButton.width
-        iconSource: "icons/prevent.png"
+        style: ButtonStyle {
+            background: Image {
+                source: "icons/prevent.png"
+            }
+        }
         onClicked: player.sendPrevious()
     }
 
@@ -82,14 +99,19 @@ Rectangle {
         onAddMusic: sendQueryToReadMusic(title, thumb, link)
     }
 
+    Connections {
+        target: app
+        onChangeMusicData: changeMusicData(title, thumb, url)
+    }
+
     function playMusic() {
-        sendPlay();
-        changePlayOrPauseVisibility();
+        sendPlay()
+        changePlayOrPauseVisibility()
     }
 
     function pauseMusic() {
-        sendPause();
-        changePlayOrPauseVisibility();
+        sendPause()
+        changePlayOrPauseVisibility()
     }
 
     function changePlayOrPauseVisibility() {
@@ -98,7 +120,7 @@ Rectangle {
     }
 
     function sendQueryToReadMusic(title, thumb, link) {
-        player.sendMusic(link)
+        sendMusic(title, thumb, link)
 
         if (playButton.visible) {
             changePlayOrPauseVisibility()
@@ -106,5 +128,10 @@ Rectangle {
             musicPicture.source = thumb
             musicPicture.opacity = 1
         }
+    }
+
+    function changeMusicData(title, thumb, url) {
+        musicTitle.text = title
+        musicPicture.source = thumb
     }
 }
