@@ -33,5 +33,3 @@ INCLUDEPATH += $$PWD/../Common
 DEPENDPATH += $$PWD/../Common
 INCLUDEPATH += $$PWD/icons
 DEPENDPATH += $$PWD/icons
-
-ANDROID_EXTRA_LIBS = /home/thomas/Programmation/build-RaspMusic-Android_pour_armeabi_GCC_4_8_Qt_5_3_2_Qt_5_3_for_Android_armv5-Debug/android-build/libs/armeabi/libCommon.so

@@ -32,6 +32,7 @@ HEADERS += common.h\
     message/getcurrentsourcemessage.h
 
 QMAKE_CXXFLAGS += -std=c++11
+CONFIG += staticlib
 
 unix {
     target.path = /usr/lib
