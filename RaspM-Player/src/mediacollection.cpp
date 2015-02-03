@@ -136,15 +136,6 @@ std::string MediaCollection::downloadMedia(const std::string &url)
     return path;
 }
 
-std::string MediaCollection::getMediaId(const std::string &url)
-{
-    QByteArray bytes;
-    bytes.append(url.data());
-    QByteArray hash = QCryptographicHash::hash(bytes, QCryptographicHash::Md5);
-
-    return hash.toHex().toStdString();
-}
-
 void MediaCollection::restartIncompleteDownloads()
 {
     QSqlQuery query(m_db);

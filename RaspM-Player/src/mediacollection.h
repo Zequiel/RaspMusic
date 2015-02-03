@@ -20,7 +20,6 @@ public:
     std::string downloadMediaById(int id);
 private:
     std::string downloadMedia(const std::string &url);
-    std::string getMediaId(const std::string &url);
     void restartIncompleteDownloads();
 
 private:
