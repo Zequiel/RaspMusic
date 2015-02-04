@@ -71,8 +71,11 @@ Item {
                     anchors.fill: parent
                     spacing: parent.height * 0.01
                     Text {
+                        width: parent.width
                         text: result
                         anchors.verticalCenter: parent.verticalCenter
+                        elide: Text.ElideRight
+                        maximumLineCount: 1
                     }
                 }
                 MouseArea {

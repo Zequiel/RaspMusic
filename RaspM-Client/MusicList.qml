@@ -30,7 +30,7 @@ ListView {
 
             Text {
                 text: title
-                font.pixelSize: parent.height * 0.2
+                font.pixelSize: parent.height * 0.4
                 anchors.verticalCenter: parent.verticalCenter
             }
         }

@@ -15,12 +15,12 @@ public:
     ~Application();
 
 signals:
-    void receiveMusicUrl(QString url);
     void changeMusicData(QString title, QString thumb, QString url);
 
 public slots:
     void connect();
-    void searchMusicData(QString url);
+    void getCurrentSource();
+    void searchMusicData(std::shared_ptr<Message> message);
     void sendMusic(QString title, QString thumb, QString url);
     void sendPlay();
     void sendPause();

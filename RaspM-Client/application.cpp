@@ -6,13 +6,22 @@
 #include <iostream>
 
 #include <message/addtoplaylistmessage.h>
+#include <message/currentsourcemessage.h>
+#include <message/getcurrentsourcemessage.h>
 #include <message/setstatemessage.h>
 #include <providers/youtubesearchclient.h>
 
 Application::Application(QObject *parent) :
     QObject(parent)
 {
-    QObject::connect(this, SIGNAL(receiveMusicUrl(QString)), this, SLOT(searchMusicData(QString)));
+    QTimer* timer = new QTimer(this);
+
+    timer->setInterval(1000);
+
+    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(getCurrentSource()));
+
+    timer->start();
+
     this->initStates();
 
     YoutubeSearchClient* client = new YoutubeSearchClient(this);
@@ -35,6 +44,7 @@ Application::Application(QObject *parent) :
     QObject::connect(playerComponent, SIGNAL(sendVolume(bool)), this, SLOT(sendVolume(bool)));
 
     this->connect();
+    QObject::connect(m_server.get(), SIGNAL(messageReceived(std::shared_ptr<Message>)), this, SLOT(searchMusicData(std::shared_ptr<Message>)));
     std::cout << "app\n" << std::endl;
 }
 
@@ -53,11 +63,19 @@ void Application::connect()
     m_server = std::unique_ptr<Server>(new Server(definition));
 }
 
-void Application::searchMusicData(QString url)
+void Application::getCurrentSource()
 {
-   QJsonObject music = serverMusicList[url].toObject();
+    GetCurrentSourceMessage message;
+    m_server->sendMessage(message);
+}
 
-   changeMusicData(music["title"].toString(), music["thumb"].toString(), url);
+void Application::searchMusicData(std::shared_ptr<Message> message)
+{
+    QString url = dynamic_cast<CurrentSourceMessage&>(*message).source();
+    std::cout << url.toStdString() << std::endl;
+    QJsonObject music = serverMusicList[url].toObject();
+
+    changeMusicData(music["title"].toString(), music["thumb"].toString(), url);
 }
 
 void Application::sendMusic(QString title, QString thumb, QString url)

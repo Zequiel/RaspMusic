@@ -38,6 +38,8 @@ Rectangle {
         verticalAlignment: Text.AlignVCenter
         text: "-"
         font.pixelSize: parent.height * 0.4
+        elide: Text.ElideRight
+        maximumLineCount: 1
     }
 
     Button {

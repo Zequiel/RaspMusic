@@ -5,8 +5,8 @@ import QtQuick.Layouts 1.1
 
 ApplicationWindow {
     id: mainLayout
-    width: Screen.width
-    height: Screen.height
+    width: 320
+    height: 320
     minimumWidth: 200
     minimumHeight: 200
     visible: true
