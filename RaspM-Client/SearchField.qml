@@ -6,7 +6,7 @@ Item {
     id: search
     anchors.verticalCenter: parent.verticalCenter
     width: parent.width * 0.7
-    height: parent.height * 0.5
+    height: parent.height * 0.7
     Rectangle {
         id: searchField
         objectName: "searchField"
